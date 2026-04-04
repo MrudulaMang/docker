@@ -1,2 +1,5 @@
 FROM mongo:7.0
 COPY *.js /docker-etrypoint-initdb.d/
+
+#docker builder -t mongodb:1.0.0
+#docker run -d --network roboshop --name mongodb mongodb:1.0.0

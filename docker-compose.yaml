@@ -1,0 +1,121 @@
+#session 53
+
+services:
+  catalogue:
+    image: mrudula158/catalogue:1.0.0 # image name
+    build: ./catalogue                #pulls dockerfile from mentioned local folder
+    container_name: catalogue
+    depends_on:
+      -mongodb
+  mongodb:
+    image: mrudula158/mongodb:1.0.0
+    build: ./mongodb
+    container_name: mongodb
+  redis:
+    image: redis:7.0                  #directly pulling from docker hub- official image, as we are not customising redis
+    container_name: redis 
+  mysql:
+    image: mrudula158/mysql
+    build: ./mysql
+    container_name: mysql
+  rabbitmq:
+    image: rabbitmq:3                #directly pulling from docker hub- official image
+    environment:
+     -RABBITMQ_DEFAULT_USER: roboshop
+     -RABBITMQ_DEFAULT_PASS: roboshop
+     container_name: rabbitmq
+  user:
+    image: mrudula158/user:1.0.0
+    build: ./user
+      # dockerfile: user.dockerfile --- not working like this. not able to read dockerfile
+    container_name: user
+    depends_on:
+      -redis
+      -mongodb
+  cart:
+    image: mrudula158/cart:1.0.0
+    build: ./cart
+    container_name: cart
+    depends_on:
+     -redis
+     -catalogue
+  shipping:
+    image: mrudula158/shipping:1.0.0
+    build: ./shipping
+    container_name: shipping
+    environment:
+     -CART_HOST: "cart"
+     -CART-PORT: "8080"
+     -USER_HOST: "user"
+     -USER_PORT: "8080"
+     -AMQP_HOST: "rabbitmq"
+     -AMQP_USER: "roboshop"
+     -AMQP_PASS:  "roboshop123"
+    depends_on:
+     -mysql
+     -cart
+  payment:
+    image: mrudula158/payment:1.0.0
+    build: ./payment
+    container_name: payment
+    depends_on:
+     -rabbitmq
+     -cart
+     -user
+  frontend:
+    image: mrudula158/frontend:1.0.0
+    build: ./frontend
+    container_name: frontend
+    ports:
+      -"80:80"
+    depends_on:
+      -catalogue
+      -user
+      -cart
+      -shipping
+      -payment
+
+
+networks:
+  default:
+  driver: bridge
+  name: roboshop
+  external: false #if true u have to create the network outisde the doc compose file
+
+/*
+change all localhost in nginx.conf file to corresponding component
+
+docker compose up - d
+docker compose up -d --build # rebuild all images
+docker compose build frontend and then docker compose up -d # build specific component image
+
+debug-----
+docker ps -- running containers
+docker ps -a -- shows exited created containers
+docker logs mongodb -- shows logs of mongodb
+
+**** beware docker uses old imgaes if already exits in current network or hub, 
+use --build if u need to rebuild image after changes
+
+3 ways of writing envi variables
+
+When do we use - then?
+Only if you choose list style:
+environment:
+  - CART_HOST=cart
+  - CART_PORT=8080
+
+  --without quotes
+ environment:
+  RABBITMQ_DEFAULT_USER: roboshop
+  RABBITMQ_DEFAULT_PASS: roboshop123 
+  ---with quotes
+   environment:
+  RABBITMQ_DEFAULT_USER: "roboshop"
+  RABBITMQ_DEFAULT_PASS: "roboshop123" 
+ 
+ -----needs - coz it is list(array)
+ depends_on:
+  - service1
+  - service2
+*/

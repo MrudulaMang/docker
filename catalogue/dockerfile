@@ -1,10 +1,17 @@
-FROM node:20
+FROM node:20 #Gives runtime (Node + npm)
 WORKDIR /app
 COPY package.json .
 COPY *.js .
 ENV MONGO="true" \
     MONGO_URL="mongodb://mongodb:27017/catalogue"
-# Environment=MONGO_URL="mongodb://<MONGODB-SERVER-IPADDRESS>:27017/catalogue", 
+# Environment=MONGO_URL="mongodb://<MONGODB-SERVER-IPADDRESS>:27017/catalogue"(NodejsPackageManager), 
 # here mongo is in same ec2 as catalogue and other so  container name owrks as DNS 
-RUN npm install
+RUN npm install #Install App Dependencies, read pakckage.json and install the libraries my app needs
 CMD ["node","server.js"]
+
+# docker network create roboshop
+# docker network diconnect bridge mongodb
+# docker network connect roboshop mongodb catalogue
+
+#docker build
+#docker run

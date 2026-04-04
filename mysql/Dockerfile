@@ -1,0 +1,10 @@
+FROM mysql:8.0
+COPY db/ /docker-entrypoint-initdb.d 
+ENV
+    MYSQL_ROOT_PASSWORD="Roboshop@1"
+
+
+#copy database files and executes from db folder to mysql when places in initdb.d at runtime in alphabetical order.
+#i got this db folder from shipping folder(unzipped shipping folder) 
+#we can load data from shipping service or mysql db
+#removed schema.sql , duplicate data
