@@ -11,19 +11,27 @@ services:
     image: mrudula158/mongodb:1.0.0
     build: ./mongodb
     container_name: mongodb
+    volumes:
+    - mongodb:/data/lib 
   redis:
     image: redis:7.0                  #directly pulling from docker hub- official image, as we are not customising redis
-    container_name: redis 
+    container_name: redis
+    volumes:
+    - mongodb:/data 
   mysql:
     image: mrudula158/mysql
     build: ./mysql
     container_name: mysql
+    volumes:
+    - mysql:/var/lib/mysql
   rabbitmq:
     image: rabbitmq:3                #directly pulling from docker hub- official image
     environment:
      -RABBITMQ_DEFAULT_USER: roboshop
      -RABBITMQ_DEFAULT_PASS: roboshop
      container_name: rabbitmq
+     volumes:
+     - rabbitmq:"/var/lib/rabbitmq"
   user:
     image: mrudula158/user:1.0.0
     build: ./user
@@ -74,7 +82,11 @@ services:
       -cart
       -shipping
       -payment
-
+volumes:
+   mongodb:
+   redis:
+   mysql:
+   rabbitmq:    
 
 networks:
   default:
@@ -118,4 +130,22 @@ environment:
  depends_on:
   - service1
   - service2
+
+VOLUMES
+Docker expects:
+👉 volume name → configuration
+Example with config:
+
+volumes:
+  mongodb:
+    driver: local
+  redis:
+    driver: local
+👉 This is a YAML mapping (dictionary), not a list. SO , we dont use -, we say mongodb:
+  volumes = {}
+  mongodb: {},
+  redis: {}
+👉 Keys = volume names
+👉 Values = empty config {} (default settings)
+
 */
