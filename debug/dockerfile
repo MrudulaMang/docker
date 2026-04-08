@@ -1,0 +1,5 @@
+FROM almalinux:9
+RUN dnf install telnet iputils net-tools bind-tools -y
+ #   dnf install ping && \
+ #   dnf install nslooku
+CMD ["SLEEP", "2000"] #20MIN

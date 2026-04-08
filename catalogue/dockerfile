@@ -8,8 +8,9 @@ RUN npm install                         #Reads package.json and download depende
 FROM node:20.20.2-alpine3.23
 WORKDIR /app
 COPY --from=builder /app /app
-ENV MONGO="true" \
-    MONGO_URL="mongodb://mongodb:27017/catalogue"
+# end is handeled in k8s via confgimap
+#ENV MONGO="true" \
+#    MONGO_URL="mongodb://mongodb:27017/catalogue"
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
 USER roboshop
@@ -20,27 +21,22 @@ ENTRYPOINT ["node"]
 
 #chatgpt optimized - claims the image size will be reduced to 150 mb or so, check
 # # Stage 1
+
 # FROM node:20.20.2-alpine3.23 as builder
-
 # WORKDIR /app
-
 # COPY package*.json ./
 # RUN npm install --omit=dev && npm cache clean --force
-
 # COPY . .
 
 # # Stage 2
+
 # FROM node:20.20.2-alpine3.23
-
 # WORKDIR /app
-
 # COPY --from=builder /app/node_modules ./node_modules
 # COPY --from=builder /app/package*.json ./
 # COPY --from=builder /app/*.js ./
-
 # ENV MONGO="true" \
 #     MONGO_URL="mongodb://mongodb:27017/catalogue"
-
 # CMD ["node","server.js"]
 
 
