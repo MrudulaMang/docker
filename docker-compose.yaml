@@ -27,10 +27,10 @@ services:
   rabbitmq:
     image: rabbitmq:3                #directly pulling from docker hub- official image
     environment:
-     -RABBITMQ_DEFAULT_USER: roboshop
-     -RABBITMQ_DEFAULT_PASS: roboshop
-     container_name: rabbitmq
-     volumes:
+      RABBITMQ_DEFAULT_USER: roboshop
+      RABBITMQ_DEFAULT_PASS: roboshop
+    container_name: rabbitmq
+    volumes:
      - rabbitmq:"/var/lib/rabbitmq"
   user:
     image: mrudula158/user:1.0.0
