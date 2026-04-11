@@ -13,9 +13,10 @@ COPY --from=builder /app /app
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 USER roboshop
 # end is handeled in k8s via confgimap
-#ENV REDIS_HOST="redis" \
-#    CATALOGUE_HOST="catalogue" \
-#    CATALOGUE_PORT="8080"
+
+ENV REDIS_HOST="redis" \
+    CATALOGUE_HOST="catalogue" \
+    CATALOGUE_PORT="8080"
 CMD ["node" , "server.js"]    
 
 
@@ -30,3 +31,5 @@ CMD ["node" , "server.js"]
 
 #docker build -t cart:1.0.0
 #docker run -d --name cart --network roboshop cart:1.0.0
+#docker exec -it cart sh
+#> curl http://localhost:8080/health
