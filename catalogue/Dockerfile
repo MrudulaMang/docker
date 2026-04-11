@@ -1,9 +1,13 @@
 #as in class
-FROM node:20.20.2-alpine3.23 as builder  # Pulls a Node.js + Alpine Linux image, Alpine = small, minimal OS
-WORKDIR /app                             #Creates /app inside container (if not exists)
-COPY package.json .                      #Bringing application source
+FROM node:20.20.2-alpine3.23 as builder  
+# Pulls a Node.js + Alpine Linux image, Alpine = small, minimal OS
+WORKDIR /app                             
+#Creates /app inside container (if not exists)
+COPY package.json .                      
+#Bringing application source
 COPY *.js .
-RUN npm install                         #Reads package.json and download dependencies and create node_modules inside container
+RUN npm install                         
+#Reads package.json and download dependencies and create node_modules inside container
 
 FROM node:20.20.2-alpine3.23
 WORKDIR /app
