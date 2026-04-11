@@ -1,5 +1,5 @@
 #as in class
-FROM node:20.20.2-alpine3.23 as builder  
+FROM node:20.20.2-alpine3.23 AS builder  
 # Pulls a Node.js + Alpine Linux image, Alpine = small, minimal OS
 WORKDIR /app                             
 #Creates /app inside container (if not exists)
