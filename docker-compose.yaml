@@ -94,7 +94,7 @@ networks:
   name: roboshop
   external: false #if true u have to create the network outisde the doc compose file
 
-/*
+/*--------------------------------------------------
 change all localhost in nginx.conf file to corresponding component
 
 docker compose up - d

@@ -1,9 +1,44 @@
-FROM nginx:1.24.0
-RUN rm -rf /usr/share/nginx/html/*
-RUN rm -rf /etc/nginx/nginx.conf
-RUN rm -rf /etc/nginx/conf.d/default.conf
+# session 59 1:00
+FROM nginx:1.24.0-alpine3.17-slim
+
+RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+RUN mkdir -p /var/cache/nginx/client_temp && \
+    mkdir -p /var/cache/nginx/proxy_temp && \
+    mkdir -p /var/cache/nginx/fastcgi_temp && \
+    mkdir -p /var/cache/nginx/uwsgi_temp && \
+    mkdir -p /var/cache/nginx/scgi_temp && \
+    chown -R nginx:nginx /var/cache/nginx && \
+    chown -R nginx:nginx /etc/nginx/ && \
+    chmod -R 755 /etc/nginx/ && \
+    chown -R nginx:nginx /var/log/nginx
+
+RUN mkdir -p /etc/nginx/ssl/ && \
+    chown -R nginx:nginx /etc/nginx/ssl/ && \
+    chmod -R 755 /etc/nginx/ssl/
+
+RUN touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY static /usr/share/nginx/html/
+USER nginx
+CMD ["nginx", "-g", "daemon off;"]
+
+# learn about these dirs later and nginx.conf
+#when we install nginx we get nginx user by default; check in nginx.conf 1st line
+
+#  in real time projects also we gather data like above from forums
+
+
+
+
+
+# FROM nginx:1.24.0
+# RUN rm -rf /usr/share/nginx/html/*
+# RUN rm -rf /etc/nginx/nginx.conf
+# RUN rm -rf /etc/nginx/conf.d/default.conf
+# COPY nginx.conf /etc/nginx/nginx.conf
+# COPY static /usr/share/nginx/html/
 
 #do changes in nginx.conf file to url
 #docker build -t frontend:1.0.0.0 .
