@@ -48,16 +48,16 @@ CMD ["nginx", "-g", "daemon off;"]
 #docker rm -f frontend
 
 
-/*
-RUN rm -rf /usr/share/nginx/html/* && \
-    rm -rf /etc/nginx/nginx.conf
-🔍 What’s happening here
-RUN executes a shell command during build
-&& ensures:
-second command runs only if first succeeds
-\ is a line continuation character (for readability)
+# /*
+# RUN rm -rf /usr/share/nginx/html/* && \
+#     rm -rf /etc/nginx/nginx.conf
+# 🔍 What’s happening here
+# RUN executes a shell command during build
+# && ensures:
+# second command runs only if first succeeds
+# \ is a line continuation character (for readability)
 
-With a trailing /, Docker treats the destination as a directory and will create it if it doesn’t exist.
-COPY nginx.conf /etc/nginx/
-else just write COPY nginx.conf /etc/nginx/nginx.conf
-*/
+# With a trailing /, Docker treats the destination as a directory and will create it if it doesn’t exist.
+# COPY nginx.conf /etc/nginx/
+# else just write COPY nginx.conf /etc/nginx/nginx.conf
+# */

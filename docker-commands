@@ -1,19 +1,22 @@
+** seems all components can talk to each other inspite of ENV---CHECK --- IF IN SAME NETWORK roboshop
 docker --version
 
+docker build -t <name>:<tag> .
+docker build -t mongodb:1.0.0 .
+docker run -d --network roboshop --name mongodb mongodb:1.0.0
+
 docker images
+docker images | head
 docker ps
 docker ps -a
-docker build -t mongodb:1.0.0 .
-docker images | head
 
 docker network create roboshop
-
 docker inspect mongodb (image)
-docker run -d --network roboshop mongodb:1.0.0
+
 docker inspect bc35bed415b2
 docker exec -it mongodb sh
 docker stop mongodb
-docker run -d --network roboshop --name      catalogue catalogue:1.0.0
+
 docker rmi catalogue:1.0.0 -(iamgename or id)
 docker rm -f catalogue -(contaienr/id)
 
@@ -45,7 +48,12 @@ exit from docker run ---- continus logging
                 ✔ Works → port is open
                 ✔ 404 → still healthy (route missing, not server) 
           -wget wont work
-               for port listener- docker logs mongodb | grep 27017
+               for port listener-
+               nc -zv redis 6379 --------NETCAT
+               nc -zv catalogue 8080
+               nc -zv localhost 8080
+
+               docker logs mongodb | grep 27017
                for mongodb connection mongosh
                # show databases
                   #--show catalogue
