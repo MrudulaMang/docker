@@ -17,8 +17,8 @@ COPY --from=builder /app /app
 # comment below two lines for k8
 ENV MONGO="true" \
     MONGO_URL="mongodb://mongodb:27017/catalogue"
-RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
-RUN chown -R roboshop:roboshop /app
+# RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
+# RUN chown -R roboshop:roboshop /app
 USER roboshop
 #CMD ["node","server.js"]
 CMD ["server.js"]

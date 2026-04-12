@@ -12,7 +12,7 @@ EXPOSE 8080
 COPY --from=builder /app /app 
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 USER roboshop
-# end is handeled in k8s via confgimap
+# ENV is handeled in k8s via confgimap
 
 ENV REDIS_HOST="redis" \
     CATALOGUE_HOST="catalogue" \
