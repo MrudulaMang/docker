@@ -33,6 +33,11 @@ exit from docker run ---- continus logging
       👉 This:
          Leaves container running ✅
          Gives you terminal back ✅
+
+docker image ls --format "table {{.Repository}}\t{{.Tag}}\t{{.CreatedSince}}"
+
+Method 1: Sort by age (newest → oldest)
+docker images --format "{{.Repository
 --------------------------------------------------------------
 
 -----------------------ALPINE NON ROOT USER-----------------------
