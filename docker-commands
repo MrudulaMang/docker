@@ -1,0 +1,124 @@
+docker --version
+
+docker images
+docker ps
+docker ps -a
+docker build -t mongodb:1.0.0 .
+docker images | head
+
+docker network create roboshop
+
+docker inspect mongodb (image)
+docker run -d --network roboshop mongodb:1.0.0
+docker inspect bc35bed415b2
+docker exec -it mongodb sh
+docker stop mongodb
+docker run -d --network roboshop --name      catalogue catalogue:1.0.0
+docker rmi catalogue:1.0.0 -(iamgename or id)
+docker rm -f catalogue -(contaienr/id)
+
+docker pull mrudula158/catalogue:1.0.0
+docker run --network roboshop --name catalogue mrudula158/catalogue:1.0.0
+
+
+docker run --rm mrudula158/catalogue:1.0.0 echo "ok"
+     👉 If it prints ok → image is complete ✅
+
+exit from docker run ---- continus logging
+   detach without stopping — VERY IMPORTANT)
+      CTRL + P + Q
+      👉 This:
+         Leaves container running ✅
+         Gives you terminal back ✅
+--------------------------------------------------------------
+
+-----------------------ALPINE NON ROOT USER-----------------------
+1. Process check (already done)
+    ps aux
+    👉 You saw:
+        node server.js
+    ✅ App running
+2. Port check (Alpine + non-root friendly)
+    Skip ss / netstat
+        👉 Directly test:
+            wget -qO- localhost:8080
+                ✔ Works → port is open
+                ✔ 404 → still healthy (route missing, not server) 
+          -wget wont work
+               for port listener- docker logs mongodb | grep 27017
+               for mongodb connection mongosh
+               # show databases
+                  #--show catalogue
+                  -----use catalogue
+                      #cata..>show collections (collections are tables)
+                               #-------db.products.find()---- gives rows which are documents
+                               #--------db.products.find().pretty()
+                                 #----------db.products.countDocumens() -- no of rows
+
+3. Application health (BEST SIGNAL)
+    wget -qO- localhost:8080/products
+        Interpret:
+            ✅ JSON / [] → healthy + DB connected
+            ❌ "database not available" → DB issue
+            ❌ no response → app stuck
+            👉 You already used this — perfect
+4. DB connectivity (indirect but reliable)
+    Since you cannot run mongo client easily:
+    👉 Use app as probe:
+    wget -qO- localhost:8080/products
+    👉 This is real production pattern
+5. Logs (your strongest tool)
+    Outside container:
+        docker logs catalogue
+        👉 This replaces:
+            strace
+            netstat
+            debugging tools    
+6. Env validation
+    env | grep MONGO
+    👉 Already confirmed
+|--------------------------------------------------------------
+|ps aux                         # process
+|wget -qO- localhost:8080       # port + app
+|wget -qO- localhost:8080/products  # DB
+|
+|docker logs catalogue          # truth source
+|---------------------------------------------------
+
+-----------------------------------------------------------------------------------
+#--------------------test container running,listening and conencting to mongo
+    #     ✔ Container running
+    #     ✔ Node process running
+    #     ✔ Port open
+    #     ✔ HTTP responding
+    # 👉 That means:
+    # Application is UP
+#--------------------ALPINE - ROOT USER ---------------------------   
+#---you  r using ALPINE image so no curl ss and netstat-----------
+
+ # docker exec -it catalogue sh ----------get into container alpine uses sh not bash
+
+# #   CONTAINER RUNNING
+#         ps aux -> shows running process ->> basic health-- look for node server.js
+#             PID 1 -- Since it’s running → container is healthy at process level
+#      PORT LISTENING   
+#     # apk add curl, alpine has no curl , its temporary instal
+# ---- curl localhost:8080 ---If app healthy:returns JSON / HTML / response
+#     apk add iproute2 FOR ss
+#         ss -tulnp
+#     apk add net-tools
+#         netstat -tulnp
+#     Don’t waste time installing tools unless needed.
+#     👉 Just do:
+#         wget -qO- localhost:<port>   
+#         ✅ Response comes → app healthy
+#     DATABASE CONENCTION
+#     ----ping mongodb
+#     ----Check env variable (common failure) --- env | grep MONGO
+#             ----should show--- MONGO_URL=mongodb://mongodb:27017/catalogue
+# BEST minimal health checklist (Alpine-friendly)        
+# ps aux
+# ss -tulnp
+# wget -qO- localhost:8080
+
+

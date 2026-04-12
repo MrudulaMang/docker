@@ -15,11 +15,11 @@ EXPOSE 8080
 COPY --from=builder /app /app
 # end is handeled in k8s via confgimap
 # comment below two lines for k8
-ENV MONGO="true" \
-    MONGO_URL="mongodb://mongodb:27017/catalogue"
-# RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
-# RUN chown -R roboshop:roboshop /app
-# USER roboshop
+#ENV MONGO="true" \
+#    MONGO_URL="mongodb://mongodb:27017/catalogue"
+ RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
+ RUN chown -R roboshop:roboshop /app
+ USER roboshop
 #CMD ["node","server.js"]
 CMD ["server.js"]
 ENTRYPOINT ["node"]
@@ -104,3 +104,73 @@ ENTRYPOINT ["node"]
 #     If you forget to copy one file → runtime crash:
 #     Error: Cannot find module './db'
 #     Wildcard avoids that class of mistake.
+
+
+# --------------------------------other ports in container when docker run....before kuber
+# udp   UNCONN   127.0.0.11:38697
+# tcp   LISTEN   127.0.0.11:32885
+# tcp   LISTEN   *:8080        (node)
+# 🔥 Let’s break it down clearly
+# ✅ 1. Your actual app
+# *:8080  → node (PID 1)
+
+# 👉 This is YOUR application
+
+# Running on port 8080
+# Listening on all interfaces (*)
+# Healthy at process + port level ✅
+# 🔹 2. These two ports (your question)
+# 🔸 127.0.0.11:38697 (UDP)
+# 🔸 127.0.0.11:32885 (TCP)
+
+# 👉 These are NOT your app
+
+# 🔥 What is 127.0.0.11?
+# 127.0.0.11 = Docker internal DNS server
+
+# 👉 Every container gets this automatically
+
+# 🔹 Why Docker uses this
+
+# Inside container:
+
+# mongodb → resolves to container IP
+
+# 👉 This resolution is handled by:
+
+# 127.0.0.11 (Docker DNS)
+# 🔥 So those ports are:
+# Port	Type	Purpose
+# 38697	UDP	DNS queries
+# 32885	TCP	DNS fallback / resolution
+# 🔥 Key insight (very important)
+
+# These ports are internal Docker networking, not your application.
+
+# 🔹 Real debugging mindset
+
+# When you see:
+
+# 127.0.0.11
+
+# 👉 Immediately think:
+
+# Docker DNS / service discovery
+# 🔥 Your current health status
+# ✔ Node running (PID 1)
+# ✔ Port 8080 listening
+# ✔ Container networking OK (DNS present)
+# 🔹 FINAL STEP (most important now)
+
+# Test app response:
+
+# wget -qO- localhost:8080
+
+# 👉 This confirms:
+
+# App responding ✅
+# Not just running
+# 🔥 One-liner takeaway
+
+# “Ports on 127.0.0.11 belong to Docker DNS, not your application.”
+
