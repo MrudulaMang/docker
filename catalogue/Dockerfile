@@ -19,7 +19,7 @@ ENV MONGO="true" \
     MONGO_URL="mongodb://mongodb:27017/catalogue"
 # RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 # RUN chown -R roboshop:roboshop /app
-USER roboshop
+# USER roboshop
 #CMD ["node","server.js"]
 CMD ["server.js"]
 ENTRYPOINT ["node"]
