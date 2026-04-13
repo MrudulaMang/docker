@@ -1,6 +1,9 @@
 ** seems all components can talk to each other inspite of ENV---CHECK --- IF IN SAME NETWORK roboshop
 docker --version
 
+docker network create roboshop
+docker network ls
+
 docker build -t <name>:<tag> .
 docker build -t mongodb:1.0.0 .
 docker run -d --network roboshop --name mongodb mongodb:1.0.0
@@ -17,6 +20,13 @@ docker network create roboshop
 docker inspect mongodb (image)
 
 docker inspect bc35bed415b2
+docker inspect <object>
+    👉 <object> can be:
+        container
+        image
+        network
+        volume
+
 docker exec -it mongodb sh
 docker stop mongodb
 
@@ -73,6 +83,13 @@ docker images --format "{{.Repository
                                #-------db.products.find()---- gives rows which are documents
                                #--------db.products.find().pretty()
                                  #----------db.products.countDocumens() -- no of rows
+                mysql : login
+                >mysql -u root -p
+                Enter password:RoboShop@1
+                show databases; use <dbname>; show tables; select * from <tblname>;
+                
+
+                 
 
 3. Application health (BEST SIGNAL)
     wget -qO- localhost:8080/products
