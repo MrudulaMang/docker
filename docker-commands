@@ -5,6 +5,9 @@ docker build -t <name>:<tag> .
 docker build -t mongodb:1.0.0 .
 docker run -d --network roboshop --name mongodb mongodb:1.0.0
 
+docker run -d   --network roboshop   -p 8080:80   --name nginx   roboshop:1.0.0
+
+
 docker images
 docker images | head
 docker ps
@@ -55,6 +58,9 @@ docker images --format "{{.Repository
           -wget wont work
                for port listener-
                nc -zv redis 6379 --------NETCAT
+                    redis-cli
+                    dbsize
+                    docker run -it --network roboshop redis redis-cli -h redis ping
                nc -zv catalogue 8080
                nc -zv localhost 8080
 
