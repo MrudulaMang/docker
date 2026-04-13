@@ -2,4 +2,5 @@ FROM almalinux:9
 RUN dnf install telnet iputils net-tools bind-utils -y
  #   dnf install ping && \
  #   dnf install nslookup
-CMD ["SLEEP", "7000"] #70MIN
+CMD ["SLEEP", "7000"] 
+#70MIN
