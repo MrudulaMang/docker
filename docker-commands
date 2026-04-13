@@ -89,6 +89,10 @@ docker images --format "{{.Repository
                 >mysql -u root -p
                 Enter password:RoboShop@1
                 show databases; use <dbname>; show tables; select * from <tblname>;
+                frontend 
+                    exec
+                    curl cart:8080 ; curl user:8080 
+                    cat etc/nginx/nginx.conf
 
 
                  
