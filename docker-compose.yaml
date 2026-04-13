@@ -52,13 +52,8 @@ services:
     build: ./shipping
     container_name: shipping
     environment:
-      CART_HOST: "cart"
-      CART_PORT: "8080"
-      USER_HOST: "user"
-      USER_PORT: "8080"
-      AMQP_HOST: "rabbitmq"
-      AMQP_USER: "roboshop"
-      AMQP_PASS:  "roboshop123"
+      CART_ENDPOINT: "cart:8080"
+      DB_HOST: "mysql"
     depends_on:
      -mysql
      -cart
@@ -66,6 +61,14 @@ services:
     image: mrudula158/payment:1.0.0
     build: ./payment
     container_name: payment
+    environment:
+      CART_HOST: "cart"
+      CART_PORT: "8080"
+      USER_HOST: "user"
+      USER_PORT: "8080"
+      AMQP_HOST: "rabbitmq"
+      AMQP_USER: "roboshop"
+      AMQP_PASS:  "roboshop123"
     depends_on:
      -rabbitmq
      -cart
