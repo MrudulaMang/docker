@@ -1,6 +1,6 @@
 #session 59 -1.24
 
-FROM maven:3.9.14
+FROM maven:3.9.14 AS builder
 WORKDIR /app
 COPY src ./src
 COPY pom.xml .
@@ -12,12 +12,12 @@ EXPOSE 8080
 WORKDIR /app
 COPY --from=builder /app/shipping.jar .
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop && \
-    chown roboshop:roboshop /app
+    chown -R roboshop:roboshop /app
 ENV CART_ENDPOINT="cart:8080" \
     DB_HOST="mysql"    
 USER roboshop
-CMD ["shipping.jar"]
-ENTRYPOINT ["java","jar"] #####check
+ENTRYPOINT ["java", "-jar", "shipping.jar"]
+#####check
 
 
 # FROM maven:3.9.14
