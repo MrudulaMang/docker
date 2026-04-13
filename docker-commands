@@ -6,6 +6,7 @@ docker network ls
 
 docker build -t <name>:<tag> .
 docker build -t mongodb:1.0.0 .
+docker build --no-cache -t your-image .
 docker run -d --network roboshop --name mongodb mongodb:1.0.0
 
 docker run -d   --network roboshop   -p 8080:80   --name nginx   roboshop:1.0.0

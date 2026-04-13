@@ -8,7 +8,7 @@ RUN pip3.9 install --prefix=/install -r requirements.txt
  #dependencies will be created in insstall folder which willbe created
 
 
-FROM python:3.9.25-alphine3.22
+FROM python:3.9.25-alpine3.22
 EXPOSE 8080
 WORKDIR /app
 RUN apk add --no cache pcre
