@@ -72,6 +72,7 @@ docker images --format "{{.Repository
                     dbsize
                     docker run -it --network roboshop redis redis-cli -h redis ping
                nc -zv catalogue 8080
+                curl http://catalogue:8080/products(means conencted to mongo)
                nc -zv localhost 8080
 
                docker logs mongodb | grep 27017
@@ -87,7 +88,7 @@ docker images --format "{{.Repository
                 >mysql -u root -p
                 Enter password:RoboShop@1
                 show databases; use <dbname>; show tables; select * from <tblname>;
-                
+
 
                  
 
