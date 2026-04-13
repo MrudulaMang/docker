@@ -36,8 +36,8 @@ ENTRYPOINT ["node"]
 #docker build -t user:1.0.0
 #docker run -d --name user --network roboshop user:1.0.0
 
-/*
-CMD node server.js
-👉 Internally becomes:
-/bin/sh -c "node server.js"
-*/
+# /*
+# CMD node server.js
+# 👉 Internally becomes:
+# /bin/sh -c "node server.js"
+# */
