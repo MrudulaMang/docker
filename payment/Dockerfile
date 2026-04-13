@@ -15,16 +15,16 @@ RUN apk add --no cache pcre
 #   adding install dir to /usr/local, anything here are executable
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
-COPY --from= bulider /install /usr/local 
+COPY --from= builder /install /usr/local 
 # can use COPY --chown=roboshop:roboshop payment.ini *.py requirement.txt -> WITH USERNAME (39:32)
 COPY payment.ini *.py requirement.txt
-ENV CART_HOST: "cart" \
-    CART_PORT: "8080" \
-    USER_HOST: "user" \
-    USER_PORT: "8080" \
-    AMQP_HOST: "rabbitmq" \
-    AMQP_USER: "roboshop" \
-    AMQP_PASS:  "roboshop123" 
+ENV CART_HOST="cart" \
+    CART_PORT="8080" \
+    USER_HOST="user" \
+    USER_PORT="8080" \
+    AMQP_HOST="rabbitmq" \
+    AMQP_USER="roboshop" \
+    AMQP_PASS="roboshop123" 
 USER roboshop                   
 CMD ["uwsgi", "--ini", "payment.ini"]
 
