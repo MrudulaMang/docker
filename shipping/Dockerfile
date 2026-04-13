@@ -4,8 +4,8 @@ FROM maven:3.9.14 AS builder
 WORKDIR /app
 COPY src ./src
 COPY pom.xml .
-RUN maven clean package && \
-    target/shipping-1.0.jar shipping.jar 
+RUN mvn clean package && \
+    mv target/shipping-1.0.jar shipping.jar 
 
 FROM eclipse-temurin:17-jre-alpine
 EXPOSE 8080
