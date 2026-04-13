@@ -10,8 +10,8 @@ EXPOSE 8080
 COPY --from=builder /app /app
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 RUN chown roboshop:roboshop /app
-ENV REDIS_URL "redis://redis:6379" \
-    MONGO_URL "mongodb://mongodb:27017/users"
+ENV REDIS_URL="redis://redis:6379" \
+    MONGO_URL="mongodb://mongodb:27017/users"
 
 USER roboshop
 CMD ["server.js"]
