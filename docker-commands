@@ -11,7 +11,6 @@ docker run -d --network roboshop --name mongodb mongodb:1.0.0
 
 docker run -d   --network roboshop   -p 8080:80   --name nginx   roboshop:1.0.0
 
-
 docker images
 docker images | head
 docker ps
@@ -33,11 +32,17 @@ docker stop mongodb
 
 docker rmi catalogue:1.0.0 -(iamgename or id)
 docker rm -f catalogue -(contaienr/id)
+docker rm -f $(docker ps -aq)------remove all containers
+docker rmi -f $(docker images -q)
 
 docker pull mrudula158/catalogue:1.0.0
 docker run --network roboshop --name catalogue mrudula158/catalogue:1.0.0
 docker tag user:1.0.0 mrudula158/user:1.0.0
-
+DB:
+    docker exec -it rabbitmq rabbitmqctl list_users
+    docker exec -it rabbitmq rabbitmqctl list_permissions
+DEBUG:
+    docker logs -f payment
 
 
 docker run --rm mrudula158/catalogue:1.0.0 echo "ok"

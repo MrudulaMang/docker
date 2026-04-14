@@ -32,7 +32,10 @@ CMD ["uwsgi", "--ini", "payment.ini"]
 
 
 
+#docker exec -it rabbitmq rabbitmqctl list_users
 
+# rabbitmqctl add_user roboshop roboshop123
+# rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 
 # FROM pyhton:3.9 #this might be on debian/unbuntu size is large
 # EXPOSE 8080
