@@ -37,6 +37,7 @@ docker stop mongodb
 
 docker rmi catalogue:1.0.0 -(iamgename or id)
 docker rm -f catalogue -(contaienr/id)
+
 docker rm -f $(docker ps -aq)------remove all containers
 docker rmi -f $(docker images -q)
 
