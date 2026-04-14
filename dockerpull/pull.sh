@@ -1,9 +1,9 @@
-docker run -d --network roboshop --name mongodb mongodb:1.0.0
-docker run -d --network roboshop --name catalogue catalogue:1.0.0
+docker run -d --network roboshop --name mongodb mrudula158/mongodb:1.0.0
+docker run -d --network roboshop --name catalogue mrudula158/catalogue:1.0.0
 docker run -d --network roboshop --name redis redis:7
 docker run -d --network roboshop --name rabbitmq rabbitmq:3
-docker run -d --network roboshop --name mysql mysql:1.0.0
-docker run -d --network roboshop --name cart cart:1.0.0
-docker run -d --network roboshop --name user user:1.0.0
-docker run -d --network roboshop --name shipping shipping:1.0.0
-docker run -d --network roboshop --name payment payment:1.0.0
+docker run -d --network roboshop --name mysql mrudula158/mysql:1.0.0
+docker run -d --network roboshop --name cart mrudula158/cart:1.0.0
+docker run -d --network roboshop --name user mrudula158/user:1.0.0
+docker run -d --network roboshop --name shipping mrudula158/shipping:1.0.0
+docker run -d --network roboshop --name payment mrudula158/payment:1.0.0
