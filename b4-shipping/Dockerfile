@@ -20,6 +20,9 @@ ENTRYPOINT ["java", "-jar", "shipping.jar"]
 #####check
 
 
+
+
+
 # FROM maven:3.9.14
 # EXPOSE 8080 #y EXPOSE?
 # WORKDIR /app

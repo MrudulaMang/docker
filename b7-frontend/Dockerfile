@@ -25,6 +25,12 @@ COPY static /usr/share/nginx/html/
 USER nginx
 CMD ["nginx", "-g", "daemon off;"]
 
+
+
+
+
+
+
 # learn about these dirs later and nginx.conf
 #when we install nginx we get nginx user by default; check in nginx.conf 1st line
 

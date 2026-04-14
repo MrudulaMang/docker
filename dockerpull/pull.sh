@@ -1,0 +1,9 @@
+docker run -d --network roboshop --name mongodb mongodb:1.0.0
+docker run -d --network roboshop --name catalogue catalogue:1.0.0
+docker run -d --network roboshop --name redis redis:7
+docker run -d --network roboshop --name rabbitmq rabbitmq:3
+docker run -d --network roboshop --name mysql mysql:1.0.0
+docker run -d --network roboshop --name cart cart:1.0.0
+docker run -d --network roboshop --name user user:1.0.0
+docker run -d --network roboshop --name shipping shipping:1.0.0
+docker run -d --network roboshop --name payment payment:1.0.0

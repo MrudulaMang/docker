@@ -25,6 +25,16 @@ CMD ["server.js"]
 ENTRYPOINT ["node"]
 
 
+
+
+
+
+
+
+
+
+
+
 #chatgpt optimized - claims the image size will be reduced to 150 mb or so, check
 # # Stage 1
 

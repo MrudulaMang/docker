@@ -36,6 +36,8 @@ docker rm -f catalogue -(contaienr/id)
 
 docker pull mrudula158/catalogue:1.0.0
 docker run --network roboshop --name catalogue mrudula158/catalogue:1.0.0
+docker tag user:1.0.0 mrudula158/user:1.0.0
+
 
 
 docker run --rm mrudula158/catalogue:1.0.0 echo "ok"

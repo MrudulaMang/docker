@@ -29,6 +29,11 @@ USER roboshop
 CMD ["uwsgi", "--ini", "payment.ini"]
 
 
+
+
+
+
+
 # FROM pyhton:3.9 #this might be on debian/unbuntu size is large
 # EXPOSE 8080
 # WORKAPP /app
