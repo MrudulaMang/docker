@@ -9,12 +9,12 @@ COPY *.js /docker-entrypoint-initdb.d/
 # ss -tulnp | grep 27017
 # mongosh -u root -p or mongosh
 # show databases
-#--show catalogue
------use catalogue
-#cata..>show collections (collections are tables)
-#-------db.products.find()---- gives rows which are documents
-#--------db.products.find().pretty()
-#----------db.products.countDocumens() -- no of rows
+    #--show catalogue
+    #-----use catalogue
+        #cata..>show collections (collections are tables)
+            #-------db.products.find()---- gives rows which are documents
+            #--------db.products.find().pretty()
+            #----------db.products.countDocumens() -- no of rows
 
 # 🧱 mongod
 # This is the actual MongoDB server
