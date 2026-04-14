@@ -13,8 +13,8 @@ WORKDIR /app
 COPY --from=builder /app/shipping.jar .
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop && \
     chown -R roboshop:roboshop /app
-ENV CART_ENDPOINT="cart:8080" \
-    DB_HOST="mysql"    
+# ENV CART_ENDPOINT="cart:8080" \
+#     DB_HOST="mysql"    
 USER roboshop
 ENTRYPOINT ["java", "-jar", "shipping.jar"]
 #####check

@@ -1,5 +1,81 @@
 1. when stuck in docker pull/ run check the docker process and kill , ctl+c Ctl+z wont work soemtimes
     ps aux | docker --- check the pid and kill it
     eg:  kill -9 9489
-2. 
+2. when cliked user register button : so the user service was not reachable, finally cam to know that url in nginx was commented
+3. payment wasnt going thru, did not create roboshop user for rabbitmq so, gave env of default user and pwd in rabbitmq docker file.
+    giving default usr and pwd rabbitmq automatically gives permission to roboshop user *./....check docker file for details
+
      
+
+
+#------------------BREAK AND TEST
+1.Stop Redis container
+    docker stop redis     
+  Debug:
+    docker logs -f cart
+        Does cart crash?
+        Does it retry?
+        Do you see connection refused?
+        Is there timeout or immediate failure?  
+2.  Network Break (Silent Killer)
+    Step:
+        Disconnect network
+            docker network disconnect <network-name> cart  
+            curl localhost:8080
+        Observe:
+            Does request hang?
+            Fast fail?
+            Any logs?
+            👉 This is real-world issue:
+                “Service is UP but not reachable”          
+3.  Wrong Environment Variable
+    Step:
+        Change Redis URL or Mongo URL to wrong value
+        Observe:
+            Does container fail at startup?
+            Or run but fail at runtime?
+           👉 This tells:
+                config validation maturity
+                startup vs runtime failure            
+4.  CPU Stress (Performance Failure)
+        Inside container:
+            yes > /dev/null
+            Observe:
+            Does app slow down?
+            Any logs?
+            Other containers affected?
+        👉 Now you’re thinking like:
+            performance + resource contention engineer                
+5.  Kill Main Process
+        docker kill cart
+        Observe:
+                Does it restart? (depends on restart policy)
+                System recovers or stays down?
+        👉 This is:
+            self-healing capability
+-------------------------
+*********Production doesn’t break in obvious ways.
+**********It breaks in weird, partial, slow, and misleading ways.
+
+ <!--            <!-- 🧠 IMPORTANT — Don’t just run commands
+            After EACH experiment, answer this:
+            What exactly failed?
+            Where did I see it? (logs / curl / behavior)
+            How fast did it fail?
+            If I was on-call, how would I detect it?
+            What would I fix?
+            💣 This is your GOLD opportunity
+            You can turn this into:
+            🔥 LinkedIn Post
+            “I killed Redis in my Docker setup. Here’s what broke…”
+            🔥 Interview Answer
+            “I test failure modes by deliberately breaking dependencies…”
+            🔥 YouTube Content (future)
+            Terminal-based outage simulation 
+
+            Do Experiment 1 (Redis kill) and come back with:
+            logs output
+            what you observed
+            your guess of root cause
+
+            I’ll guide you like a real incident review (SRE style).--> -->

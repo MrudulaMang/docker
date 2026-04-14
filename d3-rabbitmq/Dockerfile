@@ -1,6 +1,7 @@
 FROM rabbitmq:3
-ENV RABBITMQ_DEFAULT_USER=roboshop \
-    RABBITMQ_DEFAULT_PASS=roboshop123
+# ENV is handeled in k8s via confgimap
+# ENV RABBITMQ_DEFAULT_USER=roboshop \
+#     RABBITMQ_DEFAULT_PASS=roboshop123
 
 
     

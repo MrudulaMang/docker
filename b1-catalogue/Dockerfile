@@ -13,6 +13,7 @@ FROM node:20.20.2-alpine3.23
 WORKDIR /app
 EXPOSE 8080
 COPY --from=builder /app /app
+
 # end is handeled in k8s via confgimap
 # comment below two lines for k8
 #ENV MONGO="true" \
