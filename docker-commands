@@ -43,7 +43,8 @@ DB:
     docker exec -it rabbitmq rabbitmqctl list_permissions
 DEBUG:
     docker logs -f payment
-
+    docker logs cart | grep -i error
+    docker logs cart | grep -v instana ----Instana (monitoring/observability agent) remove this logs
 
 docker run --rm mrudula158/catalogue:1.0.0 echo "ok"
      👉 If it prints ok → image is complete ✅
