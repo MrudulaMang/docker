@@ -1,6 +1,11 @@
 ** seems all components can talk to each other inspite of ENV---CHECK --- IF IN SAME NETWORK roboshop
 docker --version
 
+docker info (check for login)
+ ----check for USERNAME IN THE END, give engine server details also
+Docker stores credentials in:
+~/.docker/config.json
+
 docker network create roboshop
 docker network ls
 
