@@ -21,6 +21,7 @@ docker run -d --name shipping shipping:1.2.0
 cd ../b5-payment
 docker build -t payment:1.2.0 .
 docker run -d --name payment payment:1.2.0
+
 cd ../b6-frontend
 docker build -t frontend:1.2.0 .
 docker run -d --name frontend frontend:1.2.0

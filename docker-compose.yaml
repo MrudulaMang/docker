@@ -3,20 +3,20 @@
 services:
   catalogue:
     image: mrudula158/catalogue:1.0.0 # image name
-    build: ./catalogue                #pulls dockerfile from mentioned local folder
+    build: ./b1-catalogue                #pulls dockerfile from mentioned local folder
     container_name: catalogue
     depends_on:
       -mongodb
   mongodb:
     image: mrudula158/mongodb:1.0.0
-    build: ./mongodb
+    build: ./d1mongodb
     container_name: mongodb
     volumes:
     - mongodb:/data/lib 
   redis:
     image: redis:7.0                  #directly pulling from docker hub- official image, as we are not customising redis
     container_name: redis
-    volumes:
+    volumes:  
     - mongodb:/data 
   mysql:
     image: mrudula158/mysql
@@ -90,7 +90,6 @@ volumes:
    redis:
    mysql:
    rabbitmq:    
-
 networks:
   default:
   driver: bridge

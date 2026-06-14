@@ -1,0 +1,24 @@
+docker tag catalogue:1.2.0 mrudula158/catalogue:1.2.0
+docker push mrudula158/catalogue:1.2.0
+
+docker tag mongodb:1.2.0 mrudula158/mongodb:1.2.0
+docker push mrudula158/mongodb:1.2.0
+
+docker tag mysql:1.2.0 mrudula158/mysql:1.2.0
+docker push mrudula158/mysql:1.2.0
+
+docker tag cart:1.2.0 mrudula158/cart:1.2.0
+docker push mrudula158/cart:1.2.0
+
+docker tag user:1.2.0 mrudula158/user:1.2.0
+docker push mrudula158/user:1.2.0
+
+docker tag shipping:1.2.0 mrudula158/shipping:1.2.0
+docker push mrudula158/shipping:1.2.0
+
+docker tag payment:1.2.0 mrudula158/payment:1.2.0
+docker push mrudula158/payment:1.2.0
+
+docker tag frontend:1.2.0 mrudula158/frontend:1.2.0
+docker push mrudula158/frontend:1.2.0
+

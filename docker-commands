@@ -1,4 +1,5 @@
 ** seems all components can talk to each other inspite of ENV---CHECK --- IF IN SAME NETWORK roboshop
+
 docker --version
 
 docker info (check for login)
@@ -9,10 +10,21 @@ Docker stores credentials in:
 docker network create roboshop
 docker network ls
 
-docker build -t <name>:<tag> .
+docker build -t <name>:<tag> .    eg: myapp:v1
+    -t Build this image and give it a name/tag.
+        Repository: myapp
+        Tag:        v1
 docker build -t mongodb:1.0.0 .
 docker build --no-cache -t your-image .
 docker run -d --network roboshop --name mongodb mongodb:1.0.0
+    -d -d stands for detached mode. else You see logs and the terminal is occupied.
+    Flag	Meaning
+    -t (build)	Tag image
+    -d (run)	Detached mode
+    -it	Interactive terminal
+    -p	Port mapping
+    -v	Volume mount
+    --name	Container name
 
 docker run -d   --network roboshop   -p 8080:80   --name nginx   roboshop:1.0.0
 
@@ -32,18 +44,22 @@ docker inspect <object>
         network
         volume
 
+docker exec -it <contaiid> bash ->enter into container and open bash
 docker exec -it mongodb sh
 docker stop mongodb
 
-docker rmi catalogue:1.0.0 -(iamgename or id)
+docker rmi catalogue:1.0.0 -(imagename or id)
 docker rm -f catalogue -(contaienr/id)
 
 docker rm -f $(docker ps -aq)------remove all containers
 docker rmi -f $(docker images -q)
-
+        
 docker pull mrudula158/catalogue:1.0.0
 docker run --network roboshop --name catalogue mrudula158/catalogue:1.0.0
+
 docker tag user:1.0.0 mrudula158/user:1.0.0
+docker push mrudula158/user:1.0.0
+
 DB:
     docker exec -it rabbitmq rabbitmqctl list_users
     docker exec -it rabbitmq rabbitmqctl list_permissions
@@ -63,6 +79,7 @@ exit from docker run ---- continus logging
          Gives you terminal back ✅
 
 docker image ls --format "table {{.Repository}}\t{{.Tag}}\t{{.CreatedSince}}"
+docker system df -v
 
 Method 1: Sort by age (newest → oldest)
 docker images --format "{{.Repository
@@ -91,8 +108,8 @@ docker images --format "{{.Repository
                nc -zv localhost 8080
 
                docker logs mongodb | grep 27017
-               for mongodb connection mongosh
-               # show databases
+               for MONGODB  connection -> mongosh
+                 # show databases
                   #--show catalogue
                   -----use catalogue
                       #cata..>show collections (collections are tables)
@@ -100,13 +117,13 @@ docker images --format "{{.Repository
                                #--------db.products.find().pretty()
                                  #----------db.products.countDocumens() -- no of rows
                 mysql : login
-                >mysql -u root -p
-                Enter password:RoboShop@1
-                show databases; use <dbname>; show tables; select * from <tblname>;
-                frontend 
-                    exec
-                    curl cart:8080 ; curl user:8080 
-                    cat etc/nginx/nginx.conf
+                    >mysql -u root -p
+                    Enter password:RoboShop@1
+                    show databases; use <dbname>; show tables; select * from <tblname>;
+                    frontend 
+                        exec
+                        curl cart:8080 ; curl user:8080 
+                        cat etc/nginx/nginx.conf
 
 
                  

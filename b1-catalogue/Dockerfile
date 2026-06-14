@@ -7,11 +7,13 @@ COPY package.json .
 #Bringing application source
 COPY *.js .
 RUN npm install                         
-#Reads package.json and download dependencies and create node_modules inside container
+#Reads package.json and download dependencies 
+ #and create node_modules inside container
 
 FROM node:20.20.2-alpine3.23
 WORKDIR /app
 EXPOSE 8080
+    #Documents which port the app uses
 COPY --from=builder /app /app
 
 # end is handeled in k8s via confgimap

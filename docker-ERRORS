@@ -5,7 +5,7 @@
 3. payment wasnt going thru, did not create roboshop user for rabbitmq so, gave env of default user and pwd in rabbitmq docker file.
     giving default usr and pwd rabbitmq automatically gives permission to roboshop user *./....check docker file for details
 
-     
+4.“In Spring Boot apps, HikariCP initializes DB connections at startup. If the database is unavailable, the application fails fast unless configured otherwise. To handle this in distributed systems, we implement retry logic or configure the connection pool to tolerate delayed availability.”     
 
 
 #------------------BREAK AND TEST
