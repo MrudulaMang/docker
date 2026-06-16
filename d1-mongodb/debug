@@ -39,6 +39,15 @@ docker stats --no-stream
             --- curl wont work as base image min
             
             ---JUSt checking the code of /health in catalogue
+---REDIS
+---USER
+    docker exec -it user wget -qO- http://user:8080/health
+    docker exec -it user wget -qO- http://user:8080/health
+    docker logs user | grep -i redis
+        - thre is no special health check for redis as it for mongo, this cmd gives redis:connected            
+--MYSQL
+    docker exec -it mysql mysql -u root -pRoboShop@1
+        
 
           
 --------------------------------------
