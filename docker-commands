@@ -111,7 +111,7 @@ docker images --format "{{.Repository
                for MONGODB  connection -> mongosh
                  # show databases
                   #--show catalogue
-                  -----use catalogue
+                    ---use catalogue
                       #cata..>show collections (collections are tables)
                                #-------db.products.find()---- gives rows which are documents
                                #--------db.products.find().pretty()

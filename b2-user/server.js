@@ -251,7 +251,7 @@ redisClient.connect();
 // set up Mongo
 async function mongoConnect() {
     try {
-        const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017/users';
+        const mongoURL = process.env.MONGO_URL || 'mongodb://mongodb:27017/users';
         const client = await MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true });
         db = client.db('users');
         usersCollection = db.collection('users');

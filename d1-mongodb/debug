@@ -1,0 +1,79 @@
+nc -vz is actually the quickest for just checking if the port is open/reachable — it doesn't care about the protocol. curl is better when you want to validate the actual HTTP response from your app.
+
+network troubleshooting flow from outside in:
+Host network
+    └── Docker bridge network
+            └── catalogue container (port open?)
+                    └── mongodb container (reachable from app?)
+Each step confirms one more layer is working — port open → app responding → routes exist → dependencies connected.
+
+docker stats --no-stream
+    RETURNS CPU MEM USAGE
+
+----MONGODB 
+    docker inspect mongodb ( get ip of mongo)
+    docker exec -it catalogue nc -vz mongodb 27017 (as mongo is accessible inside docker)
+        -v = verbose
+        -z = don't send data, just check connectivity
+    docker exec -it mongodb bash OR
+        docker exec -it mongodb mongosh mongodb://172.18.0.2:27017
+         -u will enter into mongo server
+        test> show databases
+              use <dbname>
+              show tables
+              db.products.find() --json
+              exit
+
+---CATALOGUE
+        from host :
+        curl http://172.18.0.3:8080 ( as port is forwaded 80:8080 can check from hostec2)
+            or nc -vz catalogue 8080
+        docker exec -it catalogue wget -qO- http://catalogue:8080/products  
+          ---> catalg conenct to mongo gets the values from Products tables, which shows mongo is reachbale from catalg and the data can be reireded too , this logic /products ios there in server.js
+        netstat -tulnp
+            shows all listning ports
+        telnet 172.18.0.3 8080
+            Telnet tries to open a TCP connection to IP 171.18.0.3 on port 8080.
+            If successful, you'll see something like:
+        docker exec -it catalogue wget -qO- http://catalogue:8080/health
+            --- curl wont work as base image min
+        docker exec -it catalogue cat server.js | grep -A 10 "health"
+            ---JUSt checking the code of /health in catalogue
+
+          
+--------------------------------------
+REMIANING DEBUGGUNG
+Here's a complete troubleshooting checklist for this setup:
+Network
+bashdocker network inspect bridge          # all containers, IPs, same network?
+docker inspect catalogue | grep -i ip  # correct IP?
+Container health
+bashdocker ps                              # running? restart count?
+docker stats                           # CPU/memory usage normal?
+docker logs catalogue                  # any errors/exceptions?
+docker logs mongodb                    # mongo startup errors?
+App behavior
+bash# does the app return correct data?
+wget -qO- http://catalogue:8080/catalogue
+
+# response time ok?
+curl -w "%{time_total}" http://localhost:80/health
+MongoDB
+bash# can you query mongo directly?
+docker exec -it mongodb mongo
+> show dbs
+> use catalogue
+> show collections
+Resources
+bashdocker stats --no-stream   # is any container eating too much CPU/RAM?
+df -h                      # disk space ok on host?
+Logs
+bashdocker logs --tail 50 catalogue        # last 50 lines
+docker logs --follow catalogue         # live logs
+docker logs --since 5m catalogue       # last 5 minutes
+
+The most important ones day-to-day are honestly just:
+
+docker logs — catches 80% of issues
+docker stats — catches resource problems
+/health endpoint — confirms end to end in one shot

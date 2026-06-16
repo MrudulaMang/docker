@@ -2,12 +2,12 @@
 FROM node:20.20.2-alpine3.23 AS builder  
 # Pulls a Node.js + Alpine Linux image, Alpine = small, minimal OS
 WORKDIR /app                             
-#Creates /app inside container (if not exists)
+    #Creates /app inside container (if not exists)
 COPY package.json .                      
-#Bringing application source
+    #Bringing application source
 COPY *.js .
 RUN npm install                         
-#Reads package.json and download dependencies 
+    #Reads package.json and download dependencies 
  #and create node_modules inside container
 
 FROM node:20.20.2-alpine3.23
@@ -15,17 +15,28 @@ WORKDIR /app
 EXPOSE 8080
     #Documents which port the app uses
 COPY --from=builder /app /app
-
-# end is handeled in k8s via confgimap
-# comment below two lines for k8
-#ENV MONGO="true" \
-#    MONGO_URL="mongodb://mongodb:27017/catalogue"
+    # end is handeled in k8s via confgimap
+    # comment below two lines for k8
+    #ENV MONGO="true" \
+    #    MONGO_URL="mongodb://mongodb:27017/catalogue"
  RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
  RUN chown -R roboshop:roboshop /app
  USER roboshop
 #CMD ["node","server.js"]
 CMD ["server.js"]
 ENTRYPOINT ["node"]
+
+#---
+#     These are Dockerfile instructions that work together:
+# ENTRYPOINT ["node"] — sets the base command that always runs when the container starts. Think of it as the executable.
+# CMD ["server.js"] — sets the default argument passed to that executable.
+# So when the container starts, Docker runs: node server.js
+# The split matters because:
+
+# ENTRYPOINT is hard to override (needs --entrypoint flag)
+# CMD is easy to override — docker run myimage app.js would run node app.js instead
+
+# If you only used CMD ["node", "server.js"], someone could accidentally override the whole thing including node itself.
 
 
 
