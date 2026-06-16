@@ -37,7 +37,7 @@ docker stats --no-stream
             If successful, you'll see something like:
         docker exec -it catalogue wget -qO- http://catalogue:8080/health
             --- curl wont work as base image min
-        docker exec -it catalogue cat server.js | grep -A 10 "health"
+            
             ---JUSt checking the code of /health in catalogue
 
           
