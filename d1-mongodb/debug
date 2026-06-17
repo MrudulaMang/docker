@@ -86,3 +86,8 @@ The most important ones day-to-day are honestly just:
 docker logs — catches 80% of issues
 docker stats — catches resource problems
 /health endpoint — confirms end to end in one shot
+-------------------------------------------
+
+🔍 `docker network inspect <network>` — see which containers are connected
+🔍 `docker exec -it <container> ping <other-container>` — test reachability
+🔍 `docker exec -it <container> curl http://<service>:<port>` — test HTTP layer
