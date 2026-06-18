@@ -62,6 +62,8 @@ docker tag user:1.0.0 mrudula158/user:1.0.0
 docker push mrudula158/user:1.0.0
 
 docker compose build catalogue
+docker compose up -d rabbitmq ---- when u need to build and immage which has no build: in compose file, ofcourse this creates container too
+
 # docker compose up -d --build # rebuild all images
 docker compose up -d
 
