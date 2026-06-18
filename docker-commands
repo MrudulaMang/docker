@@ -61,6 +61,17 @@ docker run --network roboshop --name catalogue mrudula158/catalogue:1.0.0
 docker tag user:1.0.0 mrudula158/user:1.0.0
 docker push mrudula158/user:1.0.0
 
+docker compose build catalogue
+# docker compose up -d --build # rebuild all images
+docker compose up -d
+
+docker compose logs --tail=50
+docker compose logs
+ docker logs catalogue
+ docker logs catalogue
+
+
+
 DB:
     docker exec -it rabbitmq rabbitmqctl list_users
     docker exec -it rabbitmq rabbitmqctl list_permissions

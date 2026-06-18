@@ -31,7 +31,7 @@ services:
       RABBITMQ_DEFAULT_PASS: roboshop
     container_name: rabbitmq
     volumes:
-     - rabbitmq:"/var/lib/rabbitmq"
+     - rabbitmq:/var/lib/rabbitmq
   user:
     build: ./b2-user
         # dockerfile: user.dockerfile --- not working like this. not able to read dockerfile
