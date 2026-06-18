@@ -49,10 +49,11 @@ docker exec -it mongodb sh
 docker stop mongodb
 
 docker rmi catalogue:1.0.0 -(imagename or id)
-docker rm -f catalogue -(contaienr/id)
+docker rmi -f $(docker images -aq) --------remove all images
 
+docker rm -f catalogue -(contaienr/id)
 docker rm -f $(docker ps -aq)------remove all containers
-docker rmi -f $(docker images -q)
+
         
 docker pull mrudula158/catalogue:1.0.0
 docker run --network roboshop --name catalogue mrudula158/catalogue:1.0.0

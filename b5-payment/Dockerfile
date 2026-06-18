@@ -59,7 +59,7 @@ CMD ["uwsgi", "--ini", "payment.ini"]
 # COPY requirements.txt .
     # Copies only requirements.txt first (before source code).
     # This is a Docker layer caching trick — if your code changes but dependencies don't, Docker reuses the cached pip install layer.
-------------
+#------------
 #     but base is same in both stages right
 
 # Yes, exactly! Base is the same — python:3.9.25-alpine3.22 (~50MB).
