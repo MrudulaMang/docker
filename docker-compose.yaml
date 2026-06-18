@@ -92,9 +92,9 @@ volumes:
    rabbitmq:    
 networks:
   default:
-  driver: bridge
-  name: roboshop
-  external: false 
+    driver: bridge
+    name: roboshop
+    external: false 
 
   #if true u have to create the network outisde the docr compose file
 
