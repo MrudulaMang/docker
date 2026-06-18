@@ -9,7 +9,7 @@ services:
       - mongodb
   mongodb:
     image: mrudula158/mongodb:1.3.0
-    build: ./d1mongodb
+    build: ./d1-mongodb
     container_name: mongodb
     volumes:
     - mongodb:/data/lib 
@@ -19,8 +19,8 @@ services:
     volumes:  
     - mongodb:/data 
   mysql:
-    image: mrudula158/mysql
-    build: ./mysql
+    image: mrudula158/mysql:1.3.0
+    build: ./d2-mysql
     container_name: mysql
     volumes:
     - mysql:/var/lib/mysql
@@ -34,7 +34,7 @@ services:
      - rabbitmq:"/var/lib/rabbitmq"
   user:
     image: mrudula158/user:1.3.0
-    build: ./user
+    build: ./b2-user
       # dockerfile: user.dockerfile --- not working like this. not able to read dockerfile
     container_name: user
     depends_on:
@@ -42,14 +42,14 @@ services:
       - mongodb
   cart:
     image: mrudula158/cart:1.3.0
-    build: ./cart
+    build: ./b3-cart
     container_name: cart
     depends_on:
      - redis
      - catalogue
   shipping:
     image: mrudula158/shipping:1.3.0
-    build: ./shipping
+    build: ./b4-shipping
     container_name: shipping
     environment:
       CART_ENDPOINT: "cart:8080"
@@ -59,7 +59,7 @@ services:
      - cart
   payment:
     image: mrudula158/payment:1.3.0
-    build: ./payment
+    build: ./b5-payment
     container_name: payment
     environment:
       CART_HOST: "cart"
@@ -75,7 +75,7 @@ services:
      - user
   frontend:
     image: mrudula158/frontend:1.3.0
-    build: ./frontend
+    build: ./b6-frontend
     container_name: frontend
     ports:
       - "80:80"
