@@ -2,13 +2,13 @@
 
 services:
   catalogue:
-    image: mrudula158/catalogue:1.0.0 # image name
+    image: mrudula158/catalogue:1.3.0 # image name
     build: ./b1-catalogue                #pulls dockerfile from mentioned local folder
     container_name: catalogue
     depends_on:
       -mongodb
   mongodb:
-    image: mrudula158/mongodb:1.0.0
+    image: mrudula158/mongodb:1.3.0
     build: ./d1mongodb
     container_name: mongodb
     volumes:
@@ -33,7 +33,7 @@ services:
     volumes:
      - rabbitmq:"/var/lib/rabbitmq"
   user:
-    image: mrudula158/user:1.0.0
+    image: mrudula158/user:1.3.0
     build: ./user
       # dockerfile: user.dockerfile --- not working like this. not able to read dockerfile
     container_name: user
@@ -41,14 +41,14 @@ services:
       -redis
       -mongodb
   cart:
-    image: mrudula158/cart:1.0.0
+    image: mrudula158/cart:1.3.0
     build: ./cart
     container_name: cart
     depends_on:
      -redis
      -catalogue
   shipping:
-    image: mrudula158/shipping:1.0.0
+    image: mrudula158/shipping:1.3.0
     build: ./shipping
     container_name: shipping
     environment:
@@ -58,7 +58,7 @@ services:
      -mysql
      -cart
   payment:
-    image: mrudula158/payment:1.0.0
+    image: mrudula158/payment:1.3.0
     build: ./payment
     container_name: payment
     environment:
@@ -68,13 +68,13 @@ services:
       USER_PORT: "8080"
       AMQP_HOST: "rabbitmq"
       AMQP_USER: "roboshop"
-      AMQP_PASS:  "roboshop123"
+      AMQP_PASS: "roboshop123"
     depends_on:
      -rabbitmq
      -cart
      -user
   frontend:
-    image: mrudula158/frontend:1.0.0
+    image: mrudula158/frontend:1.3.0
     build: ./frontend
     container_name: frontend
     ports:
@@ -94,60 +94,61 @@ networks:
   default:
   driver: bridge
   name: roboshop
-  external: false #if true u have to create the network outisde the doc compose file
+  external: false 
+  #if true u have to create the network outisde the docr compose file
 
-/*--------------------------------------------------
-change all localhost in nginx.conf file to corresponding component
+# /*--------------------------------------------------
+# change all localhost in nginx.conf file to corresponding component
 
-docker compose up - d
-docker compose up -d --build # rebuild all images
-docker compose build frontend and then docker compose up -d # build specific component image
+# docker compose up -d
+# docker compose up -d --build # rebuild all images
+# docker compose build frontend and then docker compose up -d # build specific component image
 
-debug-----
-docker ps -- running containers
-docker ps -a -- shows exited created containers
-docker logs mongodb -- shows logs of mongodb
+# debug-----
+# docker ps -- running containers
+# docker ps -a -- shows exited created containers
+# docker logs mongodb -- shows logs of mongodb
 
-**** beware docker uses old imgaes if already exits in current network or hub, 
-use --build if u need to rebuild image after changes
+# **** beware docker uses old images if already exits in current network or hub, 
+# use --build if u need to rebuild image after changes
 
-3 ways of writing envi variables
+# 3 ways of writing envi variables
 
-When do we use - then?
-Only if you choose list style:
-environment:
-  - CART_HOST=cart
-  - CART_PORT=8080
+# When do we use - then?
+# Only if you choose list style:
+# environment:
+#   - CART_HOST=cart
+#   - CART_PORT=8080
 
-  --without quotes
- environment:
-  RABBITMQ_DEFAULT_USER: roboshop
-  RABBITMQ_DEFAULT_PASS: roboshop123 
-  ---with quotes
-   environment:
-  RABBITMQ_DEFAULT_USER: "roboshop"
-  RABBITMQ_DEFAULT_PASS: "roboshop123" 
+#   --without quotes
+#  environment:
+#   RABBITMQ_DEFAULT_USER: roboshop
+#   RABBITMQ_DEFAULT_PASS: roboshop123 
+#   ---with quotes
+#    environment:
+#   RABBITMQ_DEFAULT_USER: "roboshop"
+#   RABBITMQ_DEFAULT_PASS: "roboshop123" 
  
- -----needs - coz it is list(array)
- depends_on:
-  - service1
-  - service2
+#  -----needs - coz it is list(array)
+#  depends_on:
+#   - service1
+#   - service2
 
-VOLUMES
-Docker expects:
-👉 volume name → configuration
-Example with config:
+# VOLUMES
+# Docker expects:
+# 👉 volume name → configuration
+# Example with config:
 
-volumes:
-  mongodb:
-    driver: local
-  redis:
-    driver: local
-👉 This is a YAML mapping (dictionary), not a list. SO , we dont use -, we say mongodb:
-  volumes = {}
-  mongodb: {},
-  redis: {}
-👉 Keys = volume names
-👉 Values = empty config {} (default settings)
+# volumes:
+#   mongodb:
+#     driver: local
+#   redis:
+#     driver: local
+# 👉 This is a YAML mapping (dictionary), not a list. SO , we dont use -, we say mongodb:
+#   volumes = {}
+#   mongodb: {},
+#   redis: {}
+# 👉 Keys = volume names
+# 👉 Values = empty config {} (default settings)
 
-*/
+# */

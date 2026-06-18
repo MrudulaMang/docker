@@ -1,4 +1,4 @@
-1. when stuck in docker pull/ run check the docker process and kill , ctl+c Ctl+z wont work soemtimes
+cd 1. when stuck in docker pull/ run check the docker process and kill , ctl+c Ctl+z wont work soemtimes
     ps aux | docker --- check the pid and kill it
     eg:  kill -9 9489
 2. when cliked user register button : so the user service was not reachable, finally cam to know that url in nginx was commented
