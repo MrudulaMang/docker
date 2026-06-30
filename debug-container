@@ -9,6 +9,14 @@ Each step confirms one more layer is working — port open → app responding �
 
 docker stats --no-stream
     RETURNS CPU MEM USAGE
+docker exec -it <container> ss -tulnp    
+iptables -L
+ufw status    
+docker network ls
+docker inspect <container>.
+systemctl status docker
+systemctl restart docker
+Reverse Proxy Issue (Nginx/ALB/Ingress)
 
 ----MONGODB 
     docker inspect mongodb ( get ip of mongo)

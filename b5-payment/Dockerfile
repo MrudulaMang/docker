@@ -89,4 +89,10 @@ CMD ["uwsgi", "--ini", "payment.ini"]
 # Copies the compiled dependencies from Stage 1's /install into /usr/local of the final image. Since /usr/local/lib, /usr/local/bin etc. are on Python's and the shell's default paths, everything is immediately importable and executable — no PYTHONPATH needed.
 
 # CMD ["uwsgi", "--ini", "payment.ini"]
-# The default command when the container starts. Runs uWSGI (Python WSGI server) using payment.ini for configuration (workers, socket, app module, etc.). Uses exec form (JSON array) — avoids wrapping in a shell, so signals like SIGTERM reach uWSGI directly for graceful shutdown.
+    # The default command when the container starts. 
+    # Runs uWSGI (Python WSGI server) using payment.ini for configuration (workers, socket, app module, etc.). 
+    # Uses exec form (JSON array) — avoids wrapping in a shell,
+        # so signals like SIGTERM reach uWSGI directly for graceful shutdown.
+        #  uwsgi – The executable to run (the uWSGI application server).
+        # --ini – A uWSGI option telling it to read its configuration from an INI file.
+        # payment.ini – The configuration file containing uWSGI settings.

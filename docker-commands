@@ -47,6 +47,7 @@ docker inspect <object>
 docker exec -it <contaiid> bash ->enter into container and open bash
 docker exec -it mongodb sh
 docker stop mongodb
+docker exec -it <container> ss -tulnp
 
 docker rmi catalogue:1.0.0 -(imagename or id)
 docker rmi -f $(docker images -aq) --------remove all images
